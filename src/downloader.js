@@ -35,9 +35,5 @@ export default (watchedState, url) => {
     .catch((error) => {
       watchedState.error = error.message;
     })
-    .finally(() =>
-      watchedState.updatingIsOn === false
-        ? updater(watchedState)
-        : console.log('LOL! IT SHOULD BE TRUE NOW')
-    );
+    .finally(() => (watchedState.updatingIsOn === false ? updater(watchedState) : null));
 };

@@ -1,7 +1,6 @@
-import i18next from "i18next";
-import resources from "../locales/index.js";
-import app from "./app.js";
-import { modelState } from "./app.js";
+import i18next from 'i18next';
+import resources from '../locales/index.js';
+import app, { modelState } from './app.js';
 
 export default () => {
   const i18n = i18next.createInstance();

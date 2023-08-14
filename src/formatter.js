@@ -18,7 +18,7 @@ export default (doc) => {
 
   const rssData = {
     feed,
-    posts: posts,
+    posts,
   };
 
   items.forEach((item) => {

@@ -55,22 +55,14 @@ const updater = (watchedState) => {
 
   urls.forEach((url) => {
     axios
-      .get(
-        `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(
-          url
-        )}`
-      )
+      .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
       .then((response) => parser(response.data.contents))
       .then((doc) => formatter(doc))
       .then((formatedData) => {
         const isEqualPost = (post1, post2) => post1.link === post2.link;
 
         formatedData.posts.forEach((post) => {
-          if (
-            !watchedState.data.posts.some((existingPost) =>
-              isEqualPost(existingPost, post)
-            )
-          ) {
+          if (!watchedState.data.posts.some((existingPost) => isEqualPost(existingPost, post))) {
             watchedState.data.posts.push(post);
           }
         });
