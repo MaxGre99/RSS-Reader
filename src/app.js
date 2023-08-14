@@ -52,5 +52,7 @@ export default (i18n) => {
       .catch((error) => {
         watchedState.error = error.message;
       });
+    elements.form.reset();
+    elements.input.focus();
   });
 };
