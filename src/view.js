@@ -92,12 +92,12 @@ export default (modelState, i18n, elements) => {
       listGroupItem.appendChild(watchButton);
 
       watchButton.addEventListener('click', (e) => {
-        const body = document.querySelector('body');
-        body.removeAttribute('data-bs-overflow');
-        body.removeAttribute('data-bs-padding-right');
+        // const body = document.querySelector('body');
+        // body.removeAttribute('data-bs-overflow');
+        // body.removeAttribute('data-bs-padding-right');
 
-        const modalWindow = document.querySelector('#modal');
-        modalWindow.setAttribute('style', 'display: block;');
+        // const modalWindow = document.querySelector('#modal');
+        // modalWindow.setAttribute('style', 'display: block;');
 
         const postID = e.target.dataset.id;
         const post = watchedState.data.posts.find((post) => post.id === postID);
@@ -114,12 +114,12 @@ export default (modelState, i18n, elements) => {
 
         const modalWindowFooter = document.querySelector('.modal-footer');
         const readButton = modalWindowFooter.querySelector('a');
-        const closeButton = modalWindowFooter.querySelector('button');
+        // const closeButton = modalWindowFooter.querySelector('button');
 
         readButton.href = post.link;
         readButton.textContent = i18n.t('descriptions.read');
 
-        closeButton.textContent = i18n.t('descriptions.close');
+        // closeButton.textContent = i18n.t('descriptions.close');
       });
     });
   };
