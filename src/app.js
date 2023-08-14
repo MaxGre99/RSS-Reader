@@ -34,7 +34,7 @@ export default (i18n) => {
   const validate = (fields, existingURLs) => {
     const schema = yup.object().shape({
       lastAddedURL: yup.string().trim().required().url()
-      .notOneOf(existingURLs),
+        .notOneOf(existingURLs),
     });
     return schema.validate(fields);
   };

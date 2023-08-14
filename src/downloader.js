@@ -7,30 +7,21 @@ export default (watchedState, url) => {
   axios
     .get(
       `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(
-        url
-      )}`
+        url,
+      )}`,
     )
     .then((response) => parser(response.data.contents))
     .then((doc) => formatter(doc))
     .then((formatedData) => {
-      const isEqualFeed = (feed1, feed2) =>
-        feed1.channelTitle === feed2.channelTitle;
+      const isEqualFeed = (feed1, feed2) => feed1.channelTitle === feed2.channelTitle;
       const isEqualPost = (post1, post2) => post1.link === post2.link;
 
-      if (
-        !watchedState.data.feeds.some((feed) =>
-          isEqualFeed(feed, formatedData.feed)
-        )
-      ) {
+      if (!watchedState.data.feeds.some((feed) => isEqualFeed(feed, formatedData.feed))) {
         watchedState.data.feeds.push(formatedData.feed);
       }
 
       formatedData.posts.forEach((post) => {
-        if (
-          !watchedState.data.posts.some((existingPost) =>
-            isEqualPost(existingPost, post)
-          )
-        ) {
+        if (!watchedState.data.posts.some((existingPost) => isEqualPost(existingPost, post))) {
           watchedState.data.posts.push(post);
         }
       });
