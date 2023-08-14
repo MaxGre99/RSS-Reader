@@ -2,27 +2,32 @@ import onChange from 'on-change';
 import _ from 'lodash';
 
 export default (modelState, i18n, elements) => {
-  const validateErrorsRender = (elements, value) => {
+  const validateErrorRender = (elements, value) => {
     if (value.includes('must not be one of the following values')) {
       elements.statusField.classList.remove('text-success');
       elements.statusField.classList.add('text-danger');
-      elements.statusField.textContent = i18n.t('errors.linkAlreadyAdded');
       elements.input.classList.add('is-invalid');
+      elements.statusField.textContent = i18n.t('errors.linkAlreadyAdded');
     } else if (value.includes('must be a valid URL')) {
       elements.statusField.classList.remove('text-success');
       elements.statusField.classList.add('text-danger');
-      elements.statusField.textContent = i18n.t('errors.linkValidationError');
       elements.input.classList.add('is-invalid');
+      elements.statusField.textContent = i18n.t('errors.linkValidationError');
     } else if (value.includes('not RSS')) {
       elements.statusField.classList.remove('text-success');
       elements.statusField.classList.add('text-danger');
-      elements.statusField.textContent = i18n.t('errors.notRSS');
       elements.input.classList.add('is-invalid');
-    } else if (value.includes('no errors')) {
+      elements.statusField.textContent = i18n.t('errors.notRSS');
+    } else if (value.includes('Network Error')) {
+      elements.statusField.classList.remove('text-success');
+      elements.statusField.classList.add('text-danger');
+      elements.input.classList.add('is-invalid');
+      elements.statusField.textContent = i18n.t('errors.networkError');
+    } else if (value.includes('no error')) {
       elements.statusField.classList.remove('text-danger');
       elements.statusField.classList.add('text-success');
-      elements.statusField.textContent = i18n.t('errors.linkValidationSuccess');
       elements.input.classList.remove('is-invalid');
+      elements.statusField.textContent = i18n.t('errors.linkValidationSuccess');
     }
   };
 
@@ -166,8 +171,8 @@ export default (modelState, i18n, elements) => {
   };
 
   const watchedState = onChange(modelState, (path, value, previousValue) => {
-    if (path === 'errors') {
-      validateErrorsRender(elements, value);
+    if (path === 'error') {
+      validateErrorRender(elements, value);
     }
 
     if (path === 'data.posts' && !_.isEqual(value, previousValue)) {
@@ -177,9 +182,9 @@ export default (modelState, i18n, elements) => {
     if (path === 'data.feeds' && !_.isEqual(value, previousValue)) {
       feedsRender(elements, value);
     }
-    /* console.log(path);
+    console.log(path);
     console.log(previousValue);
-    console.log(value); */
+    console.log(value);
   });
   return watchedState;
 };

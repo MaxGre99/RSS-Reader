@@ -1,10 +1,6 @@
 import * as yup from 'yup';
-import onChange from 'on-change';
-import _ from 'lodash';
-import axios from 'axios';
-import parser from './parser.js';
-import formatter from './formatter.js';
 import view from './view.js';
+import downloader from './downloader.js';
 
 // Model
 const modelState = {
@@ -12,8 +8,8 @@ const modelState = {
     lastAddedURL: '',
   },
   language: 'ru',
-  errors: '',
-  isInvalid: false,
+  error: '',
+  updatingIsOn: false,
   data: {
     feeds: [],
     posts: [],
@@ -52,46 +48,9 @@ export default (i18n) => {
     watchedState.field.lastAddedURL = inputValue;
 
     validate(watchedState.field, watchedState.data.urls)
-      .then(() =>
-        axios.get(
-          `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(
-            inputValue
-          )}`
-        )
-      )
-      .then((response) => parser(response.data.contents))
-      .then((doc) => formatter(doc))
-      .then((formatedData) => {
-        const isEqualFeed = (feed1, feed2) =>
-          feed1.channelTitle === feed2.channelTitle;
-        const isEqualPost = (post1, post2) => post1.link === post2.link;
-
-        if (
-          !watchedState.data.feeds.some((feed) =>
-            isEqualFeed(feed, formatedData.feed)
-          )
-        ) {
-          watchedState.data.feeds.push(formatedData.feed);
-        }
-
-        formatedData.posts.forEach((post) => {
-          if (
-            !watchedState.data.posts.some((existingPost) =>
-              isEqualPost(existingPost, post)
-            )
-          ) {
-            watchedState.data.posts.push(post);
-          }
-        });
-      })
-      .then(() => {
-        watchedState.data.urls.push(inputValue);
-      })
-      .then(() => {
-        watchedState.errors = 'no errors';
-      })
+      .then(() => downloader(watchedState, inputValue))
       .catch((error) => {
-        watchedState.errors = error.message;
+        watchedState.error = error.message;
       });
   });
 };

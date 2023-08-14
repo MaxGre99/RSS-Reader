@@ -5,11 +5,14 @@ export default (doc) => {
   const channel = doc.querySelector('channel');
   const channelTitle = channel.querySelector('title');
   const channelDescription = channel.querySelector('description');
+  const channelLink = channel.querySelector('link');
+  const channelLinkValue = channelLink.getAttribute('href');
 
   const feed = {
     id: _.uniqueId(),
     channelTitle: channelTitle.textContent,
     channelDescription: channelDescription.textContent,
+    channelURL: channelLinkValue,
   };
   const posts = [];
 
@@ -30,7 +33,6 @@ export default (doc) => {
       link: link.textContent,
     };
     posts.push(post);
-
   });
   return rssData;
 };

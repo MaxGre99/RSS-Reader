@@ -5,6 +5,6 @@ export default (data) => {
   const possibleError = doc.querySelector('parsererror');
   if (possibleError) {
     throw Error('not RSS');
-  };
+  }
   return doc;
 };
