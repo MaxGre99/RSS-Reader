@@ -182,9 +182,9 @@ export default (modelState, i18n, elements) => {
     if (path === 'data.feeds' && !_.isEqual(value, previousValue)) {
       feedsRender(elements, value);
     }
-    console.log(path);
+    /* console.log(path);
     console.log(previousValue);
-    console.log(value);
+    console.log(value); */
   });
   return watchedState;
 };

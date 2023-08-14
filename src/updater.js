@@ -1,4 +1,4 @@
-/* import axios from 'axios';
+import axios from 'axios';
 import parser from './parser.js';
 import formatter from './formatter.js';
 
@@ -43,8 +43,8 @@ const updater = (watchedState) => {
     });
 };
 
-export default updater; */
-import axios from 'axios';
+export default updater;
+/* import axios from 'axios';
 import parser from './parser.js';
 import formatter from './formatter.js';
 
@@ -76,10 +76,10 @@ const updater = (watchedState) => {
         });
       })
       .catch((error) => {
-        return {};
+        watchedState.error = error.message;
       });
   });
   setTimeout(() => updater(watchedState), 5000);
 };
 
-export default updater;
+export default updater; */

@@ -3,7 +3,7 @@ export default {
     errors: {
       linkValidationError: 'Ссылка должна быть валидным URL',
       linkValidationSuccess: 'RSS успешно загружен',
-      linkAlreadyAdded: 'RSS уже добавлен',
+      linkAlreadyAdded: 'RSS уже существует',
       networkError: 'Ошибка сети',
       notRSS: 'Ресурс не содержит валидный RSS',
     },
