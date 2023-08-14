@@ -1,4 +1,4 @@
-import axios from 'axios';
+/* import axios from 'axios';
 import parser from './parser.js';
 import formatter from './formatter.js';
 
@@ -43,9 +43,7 @@ const updater = (watchedState) => {
     });
 };
 
-export default updater;
-
-/*
+export default updater; */
 import axios from 'axios';
 import parser from './parser.js';
 import formatter from './formatter.js';
@@ -57,7 +55,11 @@ const updater = (watchedState) => {
 
   urls.forEach((url) => {
     axios
-      .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
+      .get(
+        `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(
+          url
+        )}`
+      )
       .then((response) => parser(response.data.contents))
       .then((doc) => formatter(doc))
       .then((formatedData) => {
@@ -74,11 +76,10 @@ const updater = (watchedState) => {
         });
       })
       .catch((error) => {
-        watchedState.error = error.message;
+        return {};
       });
   });
   setTimeout(() => updater(watchedState), 5000);
 };
 
-export default updater; 
-*/
+export default updater;

@@ -35,7 +35,7 @@ export default (i18n) => {
     const schema = yup.object().shape({
       lastAddedURL: yup.string().trim().required().url().notOneOf(existingURLs),
     });
-    return schema.validate(fields, { abortEarly: false });
+    return schema.validate(fields);
   };
 
   const watchedState = view(modelState, i18nToView, elements);
