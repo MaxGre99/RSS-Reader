@@ -33,14 +33,15 @@ export default (i18n) => {
 
   const validate = (fields, existingURLs) => {
     const schema = yup.object().shape({
-      lastAddedURL: yup.string().trim().required().url().notOneOf(existingURLs),
+      lastAddedURL: yup.string().trim().required().url()
+      .notOneOf(existingURLs),
     });
     return schema.validate(fields);
   };
 
   const watchedState = view(modelState, i18nToView, elements);
 
-  //Controller
+  // Controller
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
