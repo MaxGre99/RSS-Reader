@@ -13,17 +13,17 @@
 
 ## Installation:
 
-### Requirements:
-  - Mac / Linux
-  - Node.js [18.x]
+  ### Requirements:
+    - Mac / Linux
+    - Node.js [18.x]
 
-### Installation:
-#### Dependencies:
-  make install
-#### WebPack:
-  make build
-#### WebPack development-server:
-  make develop
+  ### Installation:
+  #### Dependencies:
+    make install
+  #### WebPack:
+    make build
+  #### WebPack development-server:
+    make develop
 
-### Lint:
-  make lint
+  ### Lint:
+    make lint
