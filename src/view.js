@@ -38,10 +38,23 @@ const validateErrorRender = (elements, value, i18n) => {
   }
 };
 
-const cardCreate = () => {
+const createCard = (parentElement, titleText, i18n) => {
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
-  return card;
+  parentElement.appendChild(card);
+
+  const cardBody = document.createElement('div');
+  cardBody.classList.add('card-body');
+  card.appendChild(cardBody);
+
+  const cardTitle = document.createElement('h2');
+  cardTitle.classList.add('card-title', 'h4');
+  cardTitle.textContent = i18n.t(titleText);
+  cardBody.appendChild(cardTitle);
+
+  const listGroup = document.createElement('ul');
+  listGroup.classList.add('list-group', 'border-0', 'rounded-0');
+  card.appendChild(listGroup);
 };
 
 const postsRender = (elements, value, i18n, watchedState) => {
@@ -49,21 +62,7 @@ const postsRender = (elements, value, i18n, watchedState) => {
   posts.innerHTML = '';
 
   if (!posts.querySelector('.card.border-0')) {
-    const card = cardCreate();
-    posts.appendChild(card);
-
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-    card.appendChild(cardBody);
-
-    const cardTitle = document.createElement('h2');
-    cardTitle.classList.add('card-title', 'h4');
-    cardTitle.textContent = i18n.t('descriptions.posts');
-    cardBody.appendChild(cardTitle);
-
-    const listGroup = document.createElement('ul');
-    listGroup.classList.add('list-group', 'border-0', 'rounded-0');
-    card.appendChild(listGroup);
+    createCard(posts, 'descriptions.posts', i18n);
   }
 
   const listGroup = posts.querySelector('.list-group');
@@ -130,7 +129,6 @@ const postsRender = (elements, value, i18n, watchedState) => {
 
       readButton.href = postData.link;
       readButton.textContent = i18n.t('descriptions.read');
-
       // closeButton.textContent = i18n.t('descriptions.close');
     });
   });
@@ -141,21 +139,7 @@ const feedsRender = (elements, value, i18n) => {
   feeds.innerHTML = '';
 
   if (!feeds.querySelector('.card.border-0')) {
-    const card = cardCreate();
-    feeds.appendChild(card);
-
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-    card.appendChild(cardBody);
-
-    const cardTitle = document.createElement('h2');
-    cardTitle.classList.add('card-title', 'h4');
-    cardTitle.textContent = i18n.t('descriptions.feeds');
-    cardBody.appendChild(cardTitle);
-
-    const listGroup = document.createElement('ul');
-    listGroup.classList.add('list-group', 'border-0', 'rounded-0');
-    card.appendChild(listGroup);
+    createCard(feeds, 'descriptions.feeds', i18n);
   }
 
   const listGroup = feeds.querySelector('.list-group');
