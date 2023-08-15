@@ -1,0 +1,21 @@
+name: RSS Reader Check
+on: [push]
+jobs:
+  RSS-Reader-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloning repostory
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: make install
+
+    - name: Setup Node Cache
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Run linter
+      run: make lint
