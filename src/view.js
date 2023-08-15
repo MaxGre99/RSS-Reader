@@ -1,33 +1,47 @@
 import onChange from 'on-change';
 import _ from 'lodash';
 
+const errorRender = (elements) => {
+  elements.statusField.classList.remove('text-success');
+  elements.statusField.classList.add('text-danger');
+  elements.input.classList.add('is-invalid');
+};
+
 const validateErrorRender = (elements, value, i18n) => {
-  if (value.includes('must not be one of the following values')) {
-    elements.statusField.classList.remove('text-success');
-    elements.statusField.classList.add('text-danger');
-    elements.input.classList.add('is-invalid');
-    elements.statusField.textContent = i18n.t('errors.linkAlreadyAdded');
-  } else if (value.includes('must be a valid URL')) {
-    elements.statusField.classList.remove('text-success');
-    elements.statusField.classList.add('text-danger');
-    elements.input.classList.add('is-invalid');
-    elements.statusField.textContent = i18n.t('errors.linkValidationError');
-  } else if (value.includes('not RSS')) {
-    elements.statusField.classList.remove('text-success');
-    elements.statusField.classList.add('text-danger');
-    elements.input.classList.add('is-invalid');
-    elements.statusField.textContent = i18n.t('errors.notRSS');
-  } else if (value.includes('Network Error')) {
-    elements.statusField.classList.remove('text-success');
-    elements.statusField.classList.add('text-danger');
-    elements.input.classList.add('is-invalid');
-    elements.statusField.textContent = i18n.t('errors.networkError');
-  } else if (value.includes('no error')) {
-    elements.statusField.classList.remove('text-danger');
-    elements.statusField.classList.add('text-success');
-    elements.input.classList.remove('is-invalid');
-    elements.statusField.textContent = i18n.t('errors.linkValidationSuccess');
+  switch (true) {
+    case value.includes('must not be one of the following values'):
+      errorRender(elements);
+      elements.statusField.textContent = i18n.t('errors.linkAlreadyAdded');
+      break;
+    case value.includes('must be a valid URL'):
+      errorRender(elements);
+      elements.statusField.textContent = i18n.t('errors.linkValidationError');
+      break;
+    case value.includes('not RSS'):
+      errorRender(elements);
+      elements.statusField.textContent = i18n.t('errors.notRSS');
+      break;
+    case value.includes('Network Error'):
+      errorRender(elements);
+      elements.statusField.textContent = i18n.t('errors.networkError');
+      break;
+    case value.includes('no error'):
+      elements.statusField.classList.remove('text-danger');
+      elements.statusField.classList.add('text-success');
+      elements.input.classList.remove('is-invalid');
+      elements.statusField.textContent = i18n.t('errors.linkValidationSuccess');
+      break;
+    case value.includes('is a required'):
+      break;
+    default:
+      throw new Error(`Unknown error value: '${value}'!`);
   }
+};
+
+const cardCreate = () => {
+  const card = document.createElement('div');
+  card.classList.add('card', 'border-0');
+  return card;
 };
 
 const postsRender = (elements, value, i18n, watchedState) => {
@@ -35,8 +49,7 @@ const postsRender = (elements, value, i18n, watchedState) => {
   posts.innerHTML = '';
 
   if (!posts.querySelector('.card.border-0')) {
-    const card = document.createElement('div');
-    card.classList.add('card', 'border-0');
+    const card = cardCreate();
     posts.appendChild(card);
 
     const cardBody = document.createElement('div');
@@ -128,8 +141,7 @@ const feedsRender = (elements, value, i18n) => {
   feeds.innerHTML = '';
 
   if (!feeds.querySelector('.card.border-0')) {
-    const card = document.createElement('div');
-    card.classList.add('card', 'border-0');
+    const card = cardCreate();
     feeds.appendChild(card);
 
     const cardBody = document.createElement('div');
@@ -178,9 +190,9 @@ export default (modelState, i18nToRender, elementsToRender) => {
     if (path === 'data.feeds' && !_.isEqual(value, previousValue)) {
       feedsRender(elementsToRender, value, i18nToRender);
     }
-    /* console.log(path);
-    console.log(previousValue);
-    console.log(value); */
+    // console.log(path);
+    // console.log(previousValue);
+    // console.log(value);
   });
   return watchedState;
 };
