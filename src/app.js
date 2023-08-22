@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import view from './view.js';
-import downloader from './downloader.js';
+import checkerAdder from './checkerAdder.js';
+import updater from './updater.js';
 
 // Model
 const modelState = {
@@ -9,7 +10,6 @@ const modelState = {
   },
   language: 'ru',
   error: '',
-  updatingIsOn: false,
   data: {
     feeds: [],
     posts: [],
@@ -31,10 +31,14 @@ export default (i18n) => {
     statusField: document.querySelector('.feedback'),
   };
 
-  const validate = (fields, existingURLs) => {
+  const validate = (fields, urls) => {
     const schema = yup.object().shape({
-      lastAddedURL: yup.string().trim().required().url()
-        .notOneOf(existingURLs),
+      lastAddedURL: yup
+        .string()
+        .trim()
+        .required()
+        .url()
+        .notOneOf(urls),
     });
     return schema.validate(fields);
   };
@@ -47,9 +51,16 @@ export default (i18n) => {
     const formData = new FormData(e.target);
     const inputValue = formData.get('url');
     watchedState.field.lastAddedURL = inputValue;
+    const { urls } = watchedState.data;
 
-    validate(watchedState.field, watchedState.data.urls)
-      .then(() => downloader(watchedState, inputValue))
+    validate(watchedState.field, urls)
+      .then(() => checkerAdder(inputValue))
+      .then(() => urls.push(inputValue))
+      .then(() => updater(watchedState))
+      .then(() => {
+        watchedState.error = 'no error';
+        // console.log(watchedState.error);
+      })
       .catch((error) => {
         watchedState.error = error.message;
       });

@@ -34,6 +34,7 @@ const validateErrorRender = (elements, value, i18n) => {
     case value.includes('is a required'):
       break;
     default:
+      // break;
       throw new Error(`Unknown error value: '${value}'!`);
   }
 };
