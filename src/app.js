@@ -44,6 +44,7 @@ export default (i18n) => {
   };
 
   const watchedState = view(modelState, i18nToView, elements);
+  updater(watchedState);
 
   // Controller
   elements.form.addEventListener('submit', (e) => {
