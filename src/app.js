@@ -10,6 +10,7 @@ const modelState = {
   },
   language: 'ru',
   error: '',
+  updatingIsOn: false,
   data: {
     feeds: [],
     posts: [],
@@ -57,10 +58,8 @@ export default (i18n) => {
     validate(watchedState.field, urls)
       .then(() => checkerAdder(inputValue))
       .then(() => urls.push(inputValue))
-      .then(() => updater(watchedState))
       .then(() => {
         watchedState.error = 'no error';
-        // console.log(watchedState.error);
       })
       .catch((error) => {
         watchedState.error = error.message;
